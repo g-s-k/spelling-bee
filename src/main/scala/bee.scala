@@ -4,13 +4,17 @@ import scala.io.Source
 object Main {
   def main(args: Array[String]) {
     // all of the letters
-    val allLetters = ('a' to 'z') toList
+    val vowels = Set('a', 'e', 'i', 'o', 'u')
+    val consonants = ('a' to 'z').toSet.diff(vowels)
 
-    // select seven at random
-    // TODO: better heuristic than purely random (need vowels etc.)
-    val availableLetters = Random.shuffle((0 until allLetters.length).toList)
-      .take(7)
-      .map(allLetters)
+    // select one to three vowels and backfill with consonants
+    val r = new Random
+    val numVowels = 2 + r.nextInt(2)
+    val pickedVowels = Random.shuffle(vowels).take(numVowels)
+    val pickedConsonants = Random.shuffle(consonants).take(7 - numVowels)
+    val availableLetters = Random.shuffle(pickedVowels union pickedConsonants).toList
+
+    // pick a critical letter
     val centerLetter = availableLetters.head
     val ringLetters = availableLetters.tail toSet
 
