@@ -9,7 +9,9 @@ object Main {
     // select seven at random
     val random = new Random
     // TODO: better heuristic than purely random (need vowels etc.)
-    val availableLetters = Random.shuffle((0 until allLetters.length).toList) take 7 map allLetters
+    val availableLetters = Random.shuffle((0 until allLetters.length).toList)
+      .take(7)
+      .map(allLetters)
     val centerLetter = availableLetters.head
     val ringLetters = availableLetters.tail toSet
 
@@ -25,7 +27,10 @@ object Main {
     // define template for prompt to maximize information conveyed to user
     val prompt = (n: Int) => {
       val cLet = centerLetter.toUpper
-      val letSet = availableLetters.map((v: Char) => v.toUpper).sorted.mkString(", ")
+      val letSet = availableLetters
+        .map((v: Char) => v.toUpper)
+        .sorted
+        .mkString(", ")
 
       println("\nWords must contain the letter " + cLet + ".")
       println("Words cannot contain any letters other than " + letSet)
