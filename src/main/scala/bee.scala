@@ -25,16 +25,16 @@ object Main {
       .toSet
 
     // define template for prompt to maximize information conveyed to user
-    val prompt = (n: Int) => {
-      val cLet = centerLetter.toUpper
-      val letSet = availableLetters
-        .map((v: Char) => v.toUpper)
-        .sorted
-        .mkString(", ")
+    val cLet = centerLetter.toUpper
+    val letSet = availableLetters
+      .map((v: Char) => v.toUpper)
+      .sorted
+      .mkString(", ")
 
+    val prompt = (n: Int) => {
       println("\nWords must contain the letter " + cLet + ".")
       println("Words cannot contain any letters other than " + letSet)
-      println("Progress: " + n + " words guessed.")
+      println("Progress: " + n + " words guessed out of " + words.size + " possibilities.")
       println("Guess a word or press <enter> to exit.")
       print("> ")
     }
@@ -52,7 +52,11 @@ object Main {
         g_mut += attempt
         println("Good job! " + attempt + " is a valid word.")
       } else if (attempt.length() != 0) {
-        println("Sorry, " + attempt + " is not a valid word.")
+        if (!(attempt contains centerLetter)) {
+          println("Sorry, " + attempt + " does not contain the letter " + cLet + ".")
+        } else {
+          println("Sorry, " + attempt + " is not a valid word.")
+        }
       }
 
       if (attempt.length() == 0 || words.size == g_mut.size) {
