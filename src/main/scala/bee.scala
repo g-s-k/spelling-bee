@@ -9,7 +9,7 @@ object Main {
     val random = new Random
     val pickOne = (l: List[Char]) => l(random.nextInt(l.length))
     val centerLetter = pickOne(allLetters)
-    val ringLetters = for (index <- 1 to 6) yield pickOne(allLetters)
+    val ringLetters = for (_ <- 1 to 6) yield pickOne(allLetters)
 
     println(centerLetter)
     println(ringLetters)
