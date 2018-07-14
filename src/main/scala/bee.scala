@@ -9,8 +9,10 @@ object Main {
     // select seven at random
     val random = new Random
     // TODO: better heuristic than purely random (need vowels etc.)
-    val centerLetter = allLetters(random.nextInt(allLetters.length))
-    val ringLetters = Random.shuffle((0 until allLetters.length).toList) take 6 map allLetters toSet
+    val availableLetters = Random.shuffle((0 until allLetters.length).toList) take 7 map allLetters
+    val centerLetter = availableLetters.head
+    val ringLetters = availableLetters.tail toSet
+
 
     // load dictionary and find words spelled with only these letters
     val words = Source.fromResource("english-words/words_alpha.txt")
