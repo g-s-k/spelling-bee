@@ -22,9 +22,13 @@ object Main {
       .filter((w: String) => w.toSet.diff(ringLetters + centerLetter).size == 0)
 
     // define template for prompt to maximize information conveyed to user
-    val prompt = (must: Char, can: Set[Char], n: Int) => {
-      print("Words must contain \"" + must.toUpper + "\" and can additionally contain ")
-      println(can.map((v: Char) => v.toUpper))
+    val prompt = (n: Int) => {
+      val cLet = centerLetter.toUpper
+      val letSet = availableLetters.map((v: Char) => v.toUpper).sorted.mkString(", ")
+
+      println("\nWords must contain the letter " + cLet + ".")
+      println("Words cannot contain any letters other than " + letSet)
+      println("Progress: " + n + " words guessed.")
       println("Guess a word or press <enter> to exit.")
       print("> ")
     }
