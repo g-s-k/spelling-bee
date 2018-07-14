@@ -55,14 +55,14 @@ object Main {
         println("Sorry, " + attempt + " is not a valid word.")
       }
 
-      if (words.diff(g_mut).size > 0 && attempt.length() != 0) {
+      if (attempt.length() == 0 || words.size == g_mut.size) {
+        println("\nYour final score was " + g_mut.size + "/" + words.size + ".\n")
+      } else {
         repl(g_mut)
       }
     }
 
     println("\nWelcome to Spelling Bee!")
     repl(words.empty)
-
-    // TODO: display score
   }
 }
