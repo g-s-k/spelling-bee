@@ -7,7 +7,6 @@ object Main {
     val allLetters = ('a' to 'z') toList
 
     // select seven at random
-    val random = new Random
     // TODO: better heuristic than purely random (need vowels etc.)
     val availableLetters = Random.shuffle((0 until allLetters.length).toList)
       .take(7)
