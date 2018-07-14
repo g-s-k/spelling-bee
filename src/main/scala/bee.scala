@@ -20,6 +20,7 @@ object Main {
       .filter((w: String) => w.length() > 3)
       .filter((w: String) => w contains centerLetter)
       .filter((w: String) => w.toSet.diff(ringLetters + centerLetter).size == 0)
+      .toSet
 
     // define template for prompt to maximize information conveyed to user
     val prompt = (n: Int) => {
@@ -33,9 +34,29 @@ object Main {
       print("> ")
     }
 
-    prompt(centerLetter, ringLetters, 0)
+    // prompt user for words until all are found or they give up
+    def repl(guessed: Set[String]) {
+      var g_mut = guessed
 
-    // TODO: prompt user for words until all are found or they give up
+      prompt(g_mut.size)
+      val attempt = scala.io.StdIn.readLine().trim().toLowerCase()
+
+      if (g_mut contains attempt) {
+        println("You already got " + attempt + "! Try again.")
+      } else if (words contains attempt) {
+        g_mut += attempt
+        println("Good job! " + attempt + " is a valid word.")
+      } else if (attempt.length() != 0) {
+        println("Sorry, " + attempt + " is not a valid word.")
+      }
+
+      if (words.diff(g_mut).size > 0 && attempt.length() != 0) {
+        repl(g_mut)
+      }
+    }
+
+    println("\nWelcome to Spelling Bee!")
+    repl(words.empty)
 
     // TODO: display score
   }
